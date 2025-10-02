@@ -1,0 +1,44 @@
+using System;
+
+public class Solution
+{
+    public static int[] circularArrayRotation(int[] a, int k, int[] queries)
+    {
+        int n = a.Length;
+        int[] result = new int[queries.Length];
+
+        // Effective rotations (in case k > n)
+        k = k % n;
+
+        for (int i = 0; i < queries.Length; i++)
+        {
+            // Find original index of element before rotation
+            int originalIndex = (queries[i] - k + n) % n;
+            result[i] = a[originalIndex];
+        }
+
+        return result;
+    }
+
+    public static void Main(string[] args)
+    {
+        string[] firstInput = Console.ReadLine().Split();
+        int n = int.Parse(firstInput[0]);
+        int k = int.Parse(firstInput[1]);
+        int q = int.Parse(firstInput[2]);
+
+        int[] a = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] queries = new int[q];
+        for (int i = 0; i < q; i++)
+        {
+            queries[i] = int.Parse(Console.ReadLine());
+        }
+
+        int[] answers = circularArrayRotation(a, k, queries);
+
+        foreach (int ans in answers)
+        {
+            Console.WriteLine(ans);
+        }
+    }
+}
