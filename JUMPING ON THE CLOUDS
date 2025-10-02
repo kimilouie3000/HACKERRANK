@@ -1,0 +1,31 @@
+using System;
+
+class Solution {
+    static int jumpingOnClouds(int[] c, int k) {
+        int energy = 100;
+        int n = c.Length;
+        int position = 0;
+
+        do {
+            position = (position + k) % n;
+            energy -= 1;
+            if (c[position] == 1) {
+                energy -= 2;
+            }
+        } while (position != 0);
+
+        return energy;
+    }
+
+    static void Main(string[] args) {
+        string[] tokens = Console.ReadLine().Split(' ');
+        int n = int.Parse(tokens[0]);
+        int k = int.Parse(tokens[1]);
+
+        int[] c = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int result = jumpingOnClouds(c, k);
+        Console.WriteLine(result);
+    }
+}
+
