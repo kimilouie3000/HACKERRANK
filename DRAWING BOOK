@@ -1,0 +1,24 @@
+using System;
+
+public class Solution
+{
+    public static int pageCount(int n, int p)
+    {
+        // Pages turned from the front
+        int fromFront = p / 2;
+
+        // Pages turned from the back
+        int fromBack = n / 2 - p / 2;
+
+        return Math.Min(fromFront, fromBack);
+    }
+
+    public static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine());
+        int p = int.Parse(Console.ReadLine());
+
+        int result = pageCount(n, p);
+        Console.WriteLine(result);
+    }
+}
