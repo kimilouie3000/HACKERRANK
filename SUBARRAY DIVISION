@@ -1,0 +1,43 @@
+using System;
+
+class Solution
+{
+    static int birthday(int[] s, int d, int m)
+    {
+        int count = 0;
+
+        for (int i = 0; i <= s.Length - m; i++)
+        {
+            int sum = 0;
+
+            for (int j = 0; j < m; j++)
+            {
+                sum += s[i + j];
+            }
+
+            if (sum == d)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine()); // number of squares
+        string[] input = Console.ReadLine().Split(' ');
+        int[] s = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            s[i] = int.Parse(input[i]);
+        }
+
+        string[] dm = Console.ReadLine().Split(' ');
+        int d = int.Parse(dm[0]); // birth day
+        int m = int.Parse(dm[1]); // birth month
+
+        Console.WriteLine(birthday(s, d, m));
+    }
+}
