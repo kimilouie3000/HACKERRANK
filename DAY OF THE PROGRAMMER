@@ -1,0 +1,37 @@
+using System;
+
+public class Solution
+{
+    public static string dayOfProgrammer(int year)
+    {
+        if (year == 1918)
+        {
+            // Transition year: February 14 is the 32nd day, so Feb had 15 days only (14th to 28th)
+            // Days from Jan to Feb = 31 (Jan) + 15 (Feb) = 46, so day in Sept = 256 - 31 - 15 - remaining months (Mar-Aug)
+            // Better to hardcode the exact day:
+            // Days in first 8 months in 1918 = 31 (Jan) + 15 (Feb) + 31 + 30 + 31 + 30 + 31 + 31 = 230
+            int day = 256 - 230;
+            return $"{day:D2}.09.{year}";
+        }
+        else if (year < 1918)
+        {
+            // Julian calendar leap year if divisible by 4
+            bool isLeap = (year % 4 == 0);
+            int day = isLeap ? 12 : 13;
+            return $"{day:D2}.09.{year}";
+        }
+        else
+        {
+            // Gregorian calendar leap year rules
+            bool isLeap = (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
+            int day = isLeap ? 12 : 13;
+            return $"{day:D2}.09.{year}";
+        }
+    }
+
+    public static void Main(string[] args)
+    {
+        int year = int.Parse(Console.ReadLine());
+        Console.WriteLine(dayOfProgrammer(year));
+    }
+}
