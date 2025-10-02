@@ -1,0 +1,19 @@
+using System;
+using System.Numerics;
+
+class Solution {
+    static void extraLongFactorials(int n) {
+        BigInteger factorial = BigInteger.One;
+
+        for (int i = 2; i <= n; i++) {
+            factorial *= i;
+        }
+
+        Console.WriteLine(factorial);
+    }
+
+    static void Main(string[] args) {
+        int n = int.Parse(Console.ReadLine());
+        extraLongFactorials(n);
+    }
+}
