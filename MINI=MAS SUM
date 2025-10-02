@@ -1,0 +1,20 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        // Read 5 integers
+        long[] arr = Console.ReadLine().Split(' ').Select(long.Parse).ToArray();
+
+        long totalSum = arr.Sum();
+        long min = arr.Min();
+        long max = arr.Max();
+
+        long minSum = totalSum - max;
+        long maxSum = totalSum - min;
+
+        Console.WriteLine($"{minSum} {maxSum}");
+    }
+}
