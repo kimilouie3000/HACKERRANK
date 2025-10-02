@@ -1,0 +1,21 @@
+using System;
+using System.Linq;
+
+public class Solution
+{
+    public static int hurdleRace(int k, int[] height)
+    {
+        int maxHurdle = height.Max();
+        return maxHurdle > k ? maxHurdle - k : 0;
+    }
+
+    public static void Main(string[] args)
+    {
+        string[] inputs = Console.ReadLine().Split();
+        int n = int.Parse(inputs[0]);
+        int k = int.Parse(inputs[1]);
+        int[] height = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        Console.WriteLine(hurdleRace(k, height));
+    }
+}
