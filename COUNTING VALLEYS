@@ -1,0 +1,41 @@
+using System;
+
+public class Solution
+{
+    public static int countingValleys(int steps, string path)
+    {
+        int seaLevel = 0;
+        int valleys = 0;
+        bool isInValley = false;
+        
+        foreach (char step in path)
+        {
+            if (step == 'U')
+                seaLevel++;
+            else if (step == 'D')
+                seaLevel--;
+
+            if (seaLevel < 0 && !isInValley)
+            {
+                isInValley = true;
+                valleys++;
+            }
+
+            if (seaLevel >= 0)
+            {
+                isInValley = false;
+            }
+        }
+
+        return valleys;
+    }
+
+    public static void Main(string[] args)
+    {
+        int steps = int.Parse(Console.ReadLine());
+        string path = Console.ReadLine();
+
+        int result = countingValleys(steps, path);
+        Console.WriteLine(result);
+    }
+}
