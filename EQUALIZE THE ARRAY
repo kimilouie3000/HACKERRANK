@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+
+class Solution {
+    static int equalizeArray(int[] arr) {
+        Dictionary<int, int> frequency = new Dictionary<int, int>();
+
+        foreach (int num in arr) {
+            if (frequency.ContainsKey(num)) {
+                frequency[num]++;
+            } else {
+                frequency[num] = 1;
+            }
+        }
+
+        int maxFrequency = 0;
+        foreach (var freq in frequency.Values) {
+            if (freq > maxFrequency) maxFrequency = freq;
+        }
+
+        return arr.Length - maxFrequency; // minimum deletions required
+    }
+
+    static void Main(string[] args) {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        Console.WriteLine(equalizeArray(arr));
+    }
+}
