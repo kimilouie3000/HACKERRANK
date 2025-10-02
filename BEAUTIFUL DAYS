@@ -1,0 +1,38 @@
+using System;
+
+public class Solution
+{
+    public static int beautifulDays(int i, int j, int k)
+    {
+        int count = 0;
+        for (int day = i; day <= j; day++)
+        {
+            int reversed = ReverseNumber(day);
+            int diff = Math.Abs(day - reversed);
+            if (diff % k == 0)
+                count++;
+        }
+        return count;
+    }
+
+    public static int ReverseNumber(int num)
+    {
+        int reversed = 0;
+        while (num > 0)
+        {
+            reversed = reversed * 10 + num % 10;
+            num /= 10;
+        }
+        return reversed;
+    }
+
+    public static void Main(string[] args)
+    {
+        string[] inputs = Console.ReadLine().Split();
+        int i = int.Parse(inputs[0]);
+        int j = int.Parse(inputs[1]);
+        int k = int.Parse(inputs[2]);
+
+        Console.WriteLine(beautifulDays(i, j, k));
+    }
+}
