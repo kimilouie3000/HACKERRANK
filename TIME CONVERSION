@@ -1,0 +1,17 @@
+using System;
+using System.Globalization;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        // Read input time in 12-hour format
+        string time = Console.ReadLine();
+
+        // Parse using DateTime
+        DateTime dt = DateTime.ParseExact(time, "hh:mm:sstt", CultureInfo.InvariantCulture);
+
+        // Print in 24-hour format
+        Console.WriteLine(dt.ToString("HH:mm:ss"));
+    }
+}
