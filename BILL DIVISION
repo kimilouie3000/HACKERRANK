@@ -1,0 +1,36 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static void bonAppetit(int[] bill, int k, int b)
+    {
+        // Remove the item Anna didn't eat
+        int total = bill.Sum() - bill[k];
+
+        // Anna's fair share
+        int annaShare = total / 2;
+
+        if (b == annaShare)
+            Console.WriteLine("Bon Appetit");
+        else
+            Console.WriteLine(b - annaShare);
+    }
+
+    static void Main(string[] args)
+    {
+        // Read n and k
+        string[] nk = Console.ReadLine().Split();
+        int n = int.Parse(nk[0]);
+        int k = int.Parse(nk[1]);
+
+        // Read bill array
+        int[] bill = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        // Read amount charged to Anna
+        int b = int.Parse(Console.ReadLine());
+
+        // Call function
+        bonAppetit(bill, k, b);
+    }
+}
