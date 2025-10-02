@@ -1,0 +1,26 @@
+using System;
+
+public class Solution
+{
+    public static int designerPdfViewer(int[] h, string word)
+    {
+        int maxHeight = 0;
+        foreach(char c in word)
+        {
+            // Calculate the height of each letter based on index in the height array
+            int height = h[c - 'a'];
+            if(height > maxHeight)
+                maxHeight = height;
+        }
+
+        return maxHeight * word.Length;  // width = length of word * 1, height = maxHeight
+    }
+
+    public static void Main(string[] args)
+    {
+        int[] h = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        string word = Console.ReadLine();
+
+        Console.WriteLine(designerPdfViewer(h, word));
+    }
+}
