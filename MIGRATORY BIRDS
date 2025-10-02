@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Solution
+{
+    public static int migratoryBirds(int[] arr)
+    {
+        Dictionary<int, int> frequency = new Dictionary<int, int>();
+
+        // Count frequency of each bird type
+        foreach (int bird in arr)
+        {
+            if (frequency.ContainsKey(bird))
+                frequency[bird]++;
+            else
+                frequency[bird] = 1;
+        }
+
+        // Find the max frequency
+        int maxFreq = frequency.Values.Max();
+
+        // Find the smallest bird type id with max frequency
+        int result = frequency
+            .Where(kvp => kvp.Value == maxFreq)
+            .OrderBy(kvp => kvp.Key)
+            .First()
+            .Key;
+
+        return result;
+    }
+
+    // Example usage
+    public static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+        int answer = migratoryBirds(arr);
+        Console.WriteLine(answer);
+    }
+}
