@@ -1,0 +1,27 @@
+using System;
+
+class Solution {
+    static int jumpingOnClouds(int[] c) {
+        int jumps = 0;
+        int i = 0;
+
+        while (i < c.Length - 1) {
+            // Try to jump 2 steps if possible and safe, else 1 step
+            if (i + 2 < c.Length && c[i + 2] == 0) {
+                i += 2;
+            } else {
+                i += 1;
+            }
+            jumps++;
+        }
+
+        return jumps;
+    }
+
+    static void Main(string[] args) {
+        int n = int.Parse(Console.ReadLine());
+        int[] c = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        Console.WriteLine(jumpingOnClouds(c));
+    }
+}
