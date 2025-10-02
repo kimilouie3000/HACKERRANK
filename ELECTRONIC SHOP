@@ -1,0 +1,37 @@
+using System;
+
+public class Solution
+{
+    public static int getMoneySpent(int[] keyboards, int[] drives, int b)
+    {
+        int maxSpend = -1;
+
+        foreach (int k in keyboards)
+        {
+            foreach (int d in drives)
+            {
+                int cost = k + d;
+                if (cost <= b && cost > maxSpend)
+                {
+                    maxSpend = cost;
+                }
+            }
+        }
+
+        return maxSpend;
+    }
+
+    public static void Main(string[] args)
+    {
+        string[] inputs = Console.ReadLine().Split();
+        int b = int.Parse(inputs[0]);
+        int n = int.Parse(inputs[1]);
+        int m = int.Parse(inputs[2]);
+
+        int[] keyboards = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] drives = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        int result = getMoneySpent(keyboards, drives, b);
+        Console.WriteLine(result);
+    }
+}
