@@ -1,0 +1,24 @@
+sing System;
+
+class Solution
+{
+    static int SimpleArraySum(int[] ar)
+    {
+        int sum = 0;
+        foreach (int num in ar)
+        {
+            sum += num;
+        }
+        return sum;
+    }
+
+    static void Main(string[] args)
+    {
+        int n = Convert.ToInt32(Console.ReadLine()); // size of array
+        string[] input = Console.ReadLine().Split(' ');
+        int[] ar = Array.ConvertAll(input, int.Parse);
+
+        int result = SimpleArraySum(ar);
+        Console.WriteLine(result);
+    }
+}
