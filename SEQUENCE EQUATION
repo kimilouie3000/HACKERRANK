@@ -1,0 +1,30 @@
+using System;
+
+class Solution {
+    static int[] permutationEquation(int[] p) {
+        int n = p.Length;
+        int[] result = new int[n];
+        
+        for (int x = 1; x <= n; x++) {
+            // Find y such that p[y-1] == x
+            int y = Array.IndexOf(p, x) + 1;
+            // Find z such that p[z-1] == y
+            int z = Array.IndexOf(p, y) + 1;
+            result[x-1] = z;
+        }
+        
+        return result;
+    }
+
+    static void Main(string[] args) {
+        int n = int.Parse(Console.ReadLine());
+        int[] p = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int[] result = permutationEquation(p);
+
+        foreach (int val in result) {
+            Console.WriteLine(val);
+        }
+    }
+}
+
