@@ -1,0 +1,43 @@
+using System;
+
+class Solution
+{
+    static int[] breakingRecords(int[] scores)
+    {
+        int maxScore = scores[0]; // first score sets initial max
+        int minScore = scores[0]; // first score sets initial min
+        int maxCount = 0;
+        int minCount = 0;
+
+        for (int i = 1; i < scores.Length; i++)
+        {
+            if (scores[i] > maxScore)
+            {
+                maxScore = scores[i];
+                maxCount++;
+            }
+            else if (scores[i] < minScore)
+            {
+                minScore = scores[i];
+                minCount++;
+            }
+        }
+
+        return new int[] { maxCount, minCount };
+    }
+
+    static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine()); 
+        string[] inputs = Console.ReadLine().Split(' ');
+        int[] scores = new int[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            scores[i] = int.Parse(inputs[i]);
+        }
+
+        int[] result = breakingRecords(scores);
+        Console.WriteLine(result[0] + " " + result[1]);
+    }
+}
