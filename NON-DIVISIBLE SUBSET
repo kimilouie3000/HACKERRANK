@@ -1,0 +1,38 @@
+using System;
+
+class Solution {
+    static int nonDivisibleSubset(int[] S, int k) {
+        int[] remainderCounts = new int[k];
+
+        // Count frequency of each remainder
+        foreach (int num in S) {
+            remainderCounts[num % k]++;
+        }
+
+        // At most one element with remainder 0 can be included
+        int count = Math.Min(remainderCounts[0], 1);
+
+        // Handle the remainders from 1 to k/2
+        for (int i = 1; i <= k / 2; i++) {
+            if (i == k - i) {
+                // If k is even, only one element with remainder k/2 is allowed
+                count += Math.Min(remainderCounts[i], 1);
+            } else {
+                count += Math.Max(remainderCounts[i], remainderCounts[k - i]);
+            }
+        }
+
+        return count;
+    }
+
+    static void Main(string[] args) {
+        string[] firstLine = Console.ReadLine().Split(' ');
+        int n = int.Parse(firstLine[0]);
+        int k = int.Parse(firstLine[1]);
+
+        int[] S = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        Console.WriteLine(nonDivisibleSubset(S, k));
+    }
+}
+
