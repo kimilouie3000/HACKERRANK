@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static List<int> GradingStudents(List<int> grades)
+    {
+        List<int> roundedGrades = new List<int>();
+
+        foreach (int grade in grades)
+        {
+            if (grade < 38) // Failing grade, no rounding
+            {
+                roundedGrades.Add(grade);
+            }
+            else
+            {
+                int nextMultipleOf5 = ((grade / 5) + 1) * 5;
+                if (nextMultipleOf5 - grade < 3)
+                    roundedGrades.Add(nextMultipleOf5); // Round up
+                else
+                    roundedGrades.Add(grade); // Keep same
+            }
+        }
+
+        return roundedGrades;
+    }
+
+    static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine()); // Number of students
+        List<int> grades = new List<int>();
+
+        for (int i = 0; i < n; i++)
+        {
+            grades.Add(int.Parse(Console.ReadLine()));
+        }
+
+        List<int> result = GradingStudents(grades);
+
+        foreach (int grade in result)
+        {
+            Console.WriteLine(grade);
+        }
+    }
+}
