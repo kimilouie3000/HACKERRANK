@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Solution {
+    static int[] cutTheSticks(int[] arr) {
+        List<int> result = new List<int>();
+        List<int> sticks = arr.ToList();
+
+        while (sticks.Count > 0) {
+            result.Add(sticks.Count);
+
+            int min = sticks.Min();
+            sticks = sticks.Select(x => x - min).Where(x => x > 0).ToList();
+        }
+
+        return result.ToArray();
+    }
+
+    static void Main(string[] args) {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int[] result = cutTheSticks(arr);
+
+        foreach (var count in result) {
+            Console.WriteLine(count);
+        }
+    }
+}
