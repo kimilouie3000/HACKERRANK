@@ -1,0 +1,40 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int GetTotalX(int[] a, int[] b)
+    {
+        int count = 0;
+
+        // Find the maximum of a (lowest possible candidate)
+        int start = a.Max();
+        // Find the minimum of b (highest possible candidate)
+        int end = b.Min();
+
+        for (int x = start; x <= end; x++)
+        {
+            // Check if all elements in a divide x
+            bool divisibleByA = a.All(num => x % num == 0);
+            // Check if x divides all elements in b
+            bool dividesB = b.All(num => num % x == 0);
+
+            if (divisibleByA && dividesB)
+                count++;
+        }
+
+        return count;
+    }
+
+    static void Main(string[] args)
+    {
+        string[] nm = Console.ReadLine().Split(' ');
+        int n = int.Parse(nm[0]);
+        int m = int.Parse(nm[1]);
+
+        int[] a = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        int[] b = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+        Console.WriteLine(GetTotalX(a, b));
+    }
+}
