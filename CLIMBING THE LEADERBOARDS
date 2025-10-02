@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+
+public class Solution
+{
+    public static int[] climbingLeaderboard(int[] ranked, int[] player)
+    {
+        // Create a list of unique scores in descending order (dense ranking)
+        List<int> uniqueScores = new List<int>();
+        uniqueScores.Add(ranked[0]);
+        for (int i = 1; i < ranked.Length; i++)
+        {
+            if (ranked[i] != ranked[i - 1])
+                uniqueScores.Add(ranked[i]);
+        }
+
+        int[] result = new int[player.Length];
+        int index = uniqueScores.Count - 1; // Start from the end of uniqueScores
+
+        for (int i = 0; i < player.Length; i++)
+        {
+            // Move up the leaderboard while player's score >= unique leaderboard score
+            while (index >= 0 && player[i] >= uniqueScores[index])
+            {
+                index--;
+            }
+            // The rank is index + 2 because index is zero-based and we went one past
+            result[i] = index + 2;
+        }
+
+        return result;
+    }
+
+    public static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] ranked = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+        int m = int.Parse(Console.ReadLine());
+        int[] player = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int[] ranks = climbingLeaderboard(ranked, player);
+
+        foreach (int rank in ranks)
+        {
+            Console.WriteLine(rank);
+        }
+    }
+}
