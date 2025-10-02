@@ -1,0 +1,30 @@
+using System;
+
+public class Solution
+{
+    public static string angryProfessor(int k, int[] a)
+    {
+        int onTimeCount = 0;
+        foreach (int time in a)
+        {
+            if (time <= 0)
+                onTimeCount++;
+        }
+        return onTimeCount < k ? "YES" : "NO";
+    }
+
+    public static void Main(string[] args)
+    {
+        int t = int.Parse(Console.ReadLine()); // Number of test cases
+        for (int i = 0; i < t; i++)
+        {
+            string[] input = Console.ReadLine().Split();
+            int n = int.Parse(input[0]);
+            int k = int.Parse(input[1]);
+
+            int[] arrivalTimes = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+            Console.WriteLine(angryProfessor(k, arrivalTimes));
+        }
+    }
+}
