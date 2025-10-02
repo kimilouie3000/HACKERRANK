@@ -1,0 +1,17 @@
+using System;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        // Read size of staircase
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        for (int i = 1; i <= n; i++)
+        {
+            // Print (n - i) spaces and i hashes
+            string line = new string(' ', n - i) + new string('#', i);
+            Console.WriteLine(line);
+        }
+    }
+}
