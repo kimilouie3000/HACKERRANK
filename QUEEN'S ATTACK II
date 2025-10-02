@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static int queensAttack(int n, int k, int r_q, int c_q, int[][] obstacles)
+    {
+        // Store obstacles in a hash set for quick lookup
+        HashSet<string> obstacleSet = new HashSet<string>();
+        foreach (var obs in obstacles)
+        {
+            obstacleSet.Add(obs[0] + "," + obs[1]);
+        }
+
+        // Directions queen can move: (rowDelta, colDelta)
+        int[][] directions = new int[][]
+        {
+            new int[]{1, 0},   // up
+            new int[]{-1, 0},  // down
+            new int[]{0, 1},   // right
+            new int[]{0, -1},  // left
+            new int[]{1, 1},   // up-right
+            new int[]{1, -1},  // up-left
+            new int[]{-1, 1},  // down-right
+            new int[]{-1, -1}  // down-left
+        };
+
+        int attackableSquares = 0;
+
+        // Explore each direction
+        foreach (var dir in directions)
+        {
+            int row = r_q + dir[0];
+            int col = c_q + dir[1];
+
+            while (row >= 1 && row <= n && col >= 1 && col <= n)
+            {
+                string pos = row + "," + col;
+
+                // Stop if obstacle found
+                if (obstacleSet.Contains(pos))
+                    break;
+
+                attackableSquares++;
+                row += dir[0];
+                col += dir[1];
+            }
+        }
+
+        return attackableSquares;
+    }
+
+    static void Main(string[] args)
+    {
+        string[] nk = Console.ReadLine().Split(' ');
+        int n = int.Parse(nk[0]);
+        int k = int.Parse(nk[1]);
+
+        string[] rqCq = Console.ReadLine().Split(' ');
+        int r_q = int.Parse(rqCq[0]);
+        int c_q = int.Parse(rqCq[1]);
+
+        int[][] obstacles = new int[k][];
+        for (int i = 0; i < k; i++)
+        {
+            obstacles[i] = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+        }
+
+        int result = queensAttack(n, k, r_q, c_q, obstacles);
+        Console.WriteLine(result);
+    }
+}
