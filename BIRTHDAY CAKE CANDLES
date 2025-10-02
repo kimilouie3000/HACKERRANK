@@ -1,0 +1,19 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        // Read number of candles
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        // Read candle heights
+        int[] candles = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+        int tallest = candles.Max();
+        int count = candles.Count(c => c == tallest);
+
+        Console.WriteLine(count);
+    }
+}
