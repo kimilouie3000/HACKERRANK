@@ -1,0 +1,48 @@
+sing System;
+
+class Solution {
+    static string organizingContainers(int[][] container) {
+        int n = container.Length;
+        int[] containerCapacities = new int[n];
+        int[] ballTypeCounts = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            int containerSum = 0;
+            int ballSum = 0;
+
+            for (int j = 0; j < n; j++) {
+                containerSum += container[i][j];     // sum of balls in container i
+                ballSum += container[j][i];         // sum of balls of type i
+            }
+
+            containerCapacities[i] = containerSum;
+            ballTypeCounts[i] = ballSum;
+        }
+
+        Array.Sort(containerCapacities);
+        Array.Sort(ballTypeCounts);
+
+        for (int i = 0; i < n; i++) {
+            if (containerCapacities[i] != ballTypeCounts[i]) {
+                return "Impossible";
+            }
+        }
+
+        return "Possible";
+    }
+
+    static void Main(string[] args) {
+        int q = int.Parse(Console.ReadLine());
+
+        for (int i = 0; i < q; i++) {
+            int n = int.Parse(Console.ReadLine());
+            int[][] container = new int[n][];
+
+            for (int j = 0; j < n; j++) {
+                container[j] = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+            }
+
+            Console.WriteLine(organizingContainers(container));
+        }
+    }
+}
