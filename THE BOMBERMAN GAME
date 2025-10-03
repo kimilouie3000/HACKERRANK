@@ -1,0 +1,114 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        var inputs = Console.ReadLine().Split();
+        int r = int.Parse(inputs[0]);
+        int c = int.Parse(inputs[1]);
+        int n = int.Parse(inputs[2]);
+        string[] grid = new string[r];
+        for (int i = 0; i < r; i++)
+        {
+            grid[i] = Console.ReadLine();
+        }
+        string[] result = bomberMan(n, grid);
+        foreach (var line in result)
+        {
+            Console.WriteLine(line);
+        }
+    }
+
+    public static string[] bomberMan(int n, string[] grid)
+    {
+        int rows = grid.Length;
+        int cols = grid[0].Length;
+
+        // If n == 1, return initial grid
+        if (n == 1)
+            return grid;
+
+        // If n is even, grid is full of bombs
+        if (n % 2 == 0)
+            return FullBombsGrid(rows, cols);
+
+        // After first detonation, pattern repeats every 4 seconds starting at 3
+        // We simulate for n%4 == 3 and n%4 == 1 cases after initial step
+
+        string[] firstExplosion = Explode(grid);
+        if (n % 4 == 3)
+        {
+            // After 3, 7, 11,... seconds state is firstExplosion
+            return firstExplosion;
+        }
+        else
+        {
+            // n % 4 == 1 and n > 1 
+            // After 5, 9, 13,... seconds state is explosion from firstExplosion
+            return Explode(firstExplosion);
+        }
+    }
+
+    static string[] FullBombsGrid(int rows, int cols)
+    {
+        string fullLine = new string('O', cols);
+        string[] fullGrid = new string[rows];
+        for (int i = 0; i < rows; i++)
+        {
+            fullGrid[i] = fullLine;
+        }
+        return fullGrid;
+    }
+
+    static string[] Explode(string[] grid)
+    {
+        int rows = grid.Length;
+        int cols = grid[0].Length;
+        bool[,] bombPositions = new bool[rows, cols];
+
+        // Mark bombs positions to be exploded and their neighbors
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                if (grid[i][j] == 'O')
+                {
+                    bombPositions[i, j] = true;
+                }
+            }
+        }
+
+        char[][] result = new char[rows][];
+        for (int i = 0; i < rows; i++)
+            result[i] = new char[cols];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                // If current cell is bomb or neighbor to bomb, it's cleared ('.')
+                if (bombPositions[i, j] ||
+                    (i > 0 && bombPositions[i - 1, j]) ||
+                    (i < rows - 1 && bombPositions[i + 1, j]) ||
+                    (j > 0 && bombPositions[i, j - 1]) ||
+                    (j < cols - 1 && bombPositions[i, j + 1]))
+                {
+                    result[i][j] = '.';
+                }
+                else
+                {
+                    // Cells which are not bombs or neighbors become bombs
+                    result[i][j] = 'O';
+                }
+            }
+        }
+
+        string[] resStrings = new string[rows];
+        for (int i = 0; i < rows; i++)
+            resStrings[i] = new string(result[i]);
+
+        return resStrings;
+    }
+}
