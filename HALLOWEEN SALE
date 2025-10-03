@@ -1,0 +1,31 @@
+using System;
+
+class Solution {
+    static int howManyGames(int p, int d, int m, int s) {
+        int count = 0;
+        int price = p;
+
+        while (s >= price) {
+            s -= price;
+            count++;
+
+            if (price - d >= m) {
+                price -= d;
+            } else {
+                price = m;
+            }
+        }
+
+        return count;
+    }
+
+    static void Main(string[] args) {
+        string[] inputs = Console.ReadLine().Split(' ');
+        int p = int.Parse(inputs[0]); // initial price
+        int d = int.Parse(inputs[1]); // discount
+        int m = int.Parse(inputs[2]); // minimum price
+        int s = int.Parse(inputs[3]); // starting budget
+
+        Console.WriteLine(howManyGames(p, d, m, s));
+    }
+}
