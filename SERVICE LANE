@@ -1,0 +1,44 @@
+using System;
+
+class Solution {
+    static int[] serviceLane(int n, int[][] cases, int[] width) {
+        int t = cases.Length;
+        int[] result = new int[t];
+
+        for (int i = 0; i < t; i++) {
+            int start = cases[i][0];
+            int end = cases[i][1];
+            int minWidth = int.MaxValue;
+
+            for (int j = start; j <= end; j++) {
+                if (width[j] < minWidth) {
+                    minWidth = width[j];
+                }
+            }
+
+            result[i] = minWidth;
+        }
+
+        return result;
+    }
+
+    static void Main(string[] args) {
+        string[] nt = Console.ReadLine().Split(' ');
+        int n = int.Parse(nt[0]);
+        int t = int.Parse(nt[1]);
+
+        int[] width = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int[][] cases = new int[t][];
+        for (int i = 0; i < t; i++) {
+            cases[i] = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+        }
+
+        int[] results = serviceLane(n, cases, width);
+
+        foreach (int res in results) {
+            Console.WriteLine(res);
+        }
+    }
+}
+
