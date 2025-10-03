@@ -1,0 +1,35 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static void insertionSortCorrectness(int n, int[] arr)
+    {
+        for (int i = 1; i < n; i++)
+        {
+            int value = arr[i];
+            int j = i - 1;
+
+            // Shift larger elements to the right
+            while (j >= 0 && arr[j] > value)
+            {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+
+            // Insert the value into the correct position
+            arr[j + 1] = value;
+        }
+
+        // Print only once, when array is sorted
+        Console.WriteLine(string.Join(" ", arr));
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+        insertionSortCorrectness(n, arr);
+    }
+}
