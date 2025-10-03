@@ -1,0 +1,36 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static string twoArrays(int k, int[] A, int[] B)
+    {
+        Array.Sort(A);               // ascending
+        Array.Sort(B);               // ascending
+        Array.Reverse(B);            // descending
+
+        for (int i = 0; i < A.Length; i++)
+        {
+            if (A[i] + B[i] < k)
+                return "NO";
+        }
+        return "YES";
+    }
+
+    static void Main()
+    {
+        int q = int.Parse(Console.ReadLine());
+
+        for (int t = 0; t < q; t++)
+        {
+            var nk = Console.ReadLine().Split().Select(int.Parse).ToArray();
+            int n = nk[0];
+            int k = nk[1];
+
+            int[] A = Console.ReadLine().Split().Select(int.Parse).ToArray();
+            int[] B = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+            Console.WriteLine(twoArrays(k, A, B));
+        }
+    }
+}
