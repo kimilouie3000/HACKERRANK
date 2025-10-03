@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static int minimumDistances(int[] a)
+    {
+        Dictionary<int, int> lastIndex = new Dictionary<int, int>();
+        int minDistance = int.MaxValue;
+
+        for (int i = 0; i < a.Length; i++)
+        {
+            if (lastIndex.ContainsKey(a[i]))
+            {
+                int distance = i - lastIndex[a[i]];
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                }
+            }
+            lastIndex[a[i]] = i;
+        }
+
+        return (minDistance == int.MaxValue) ? -1 : minDistance;
+    }
+
+    static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        Console.WriteLine(minimumDistances(arr));
+    }
+}
