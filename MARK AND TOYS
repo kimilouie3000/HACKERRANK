@@ -1,0 +1,44 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int maximumToys(int[] prices, int k)
+    {
+        Array.Sort(prices); // sort prices from smallest to largest
+        int count = 0;
+        int total = 0;
+
+        foreach (int price in prices)
+        {
+            if (total + price <= k)
+            {
+                total += price;
+                count++;
+            }
+            else
+            {
+                break; // stop if we exceed budget
+            }
+        }
+
+        return count;
+    }
+
+    static void Main()
+    {
+        // Read input
+        var firstLine = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        int n = firstLine[0];
+        int k = firstLine[1];
+
+        int[] prices = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+        // Compute result
+        int result = maximumToys(prices, k);
+
+        // Output
+        Console.WriteLine(result);
+    }
+}
+
