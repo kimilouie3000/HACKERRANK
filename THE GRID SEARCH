@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static string gridSearch(List<string> G, List<string> P)
+    {
+        int R = G.Count;
+        int r = P.Count;
+        int c = P[0].Length;
+
+        for (int i = 0; i <= R - r; i++) // rows where pattern can fit
+        {
+            int idx = G[i].IndexOf(P[0]);
+            while (idx != -1) // check all occurrences in the row
+            {
+                bool match = true;
+                for (int j = 1; j < r; j++)
+                {
+                    if (G[i + j].IndexOf(P[j], idx) != idx)
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) return "YES";
+                idx = G[i].IndexOf(P[0], idx + 1);
+            }
+        }
+        return "NO";
+    }
+
+    static void Main(string[] args)
+    {
+        int t = int.Parse(Console.ReadLine());
+        for (int a0 = 0; a0 < t; a0++)
+        {
+            string[] gridSize = Console.ReadLine().Split(' ');
+            int R = int.Parse(gridSize[0]);
+            int C = int.Parse(gridSize[1]);
+            List<string> G = new List<string>();
+            for (int i = 0; i < R; i++)
+            {
+                G.Add(Console.ReadLine());
+            }
+            string[] patternSize = Console.ReadLine().Split(' ');
+            int r = int.Parse(patternSize[0]);
+            int c = int.Parse(patternSize[1]);
+            List<string> P = new List<string>();
+            for (int i = 0; i < r; i++)
+            {
+                P.Add(Console.ReadLine());
+            }
+
+            Console.WriteLine(gridSearch(G, P));
+        }
+    }
+}
