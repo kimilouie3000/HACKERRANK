@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Solution
+{
+    static int[] jimOrders(int[][] orders)
+    {
+        // List to hold (serveTime, customerNumber)
+        List<(int serveTime, int customer)> customers = new List<(int, int)>();
+
+        for (int i = 0; i < orders.Length; i++)
+        {
+            int orderTime = orders[i][0];
+            int prepTime = orders[i][1];
+            int serveTime = orderTime + prepTime;
+
+            // Customer number is i+1 because customers are numbered 1..n
+            customers.Add((serveTime, i + 1));
+        }
+
+        // Sort: first by serveTime, then by customer number
+        var sorted = customers
+            .OrderBy(x => x.serveTime)
+            .ThenBy(x => x.customer)
+            .Select(x => x.customer)
+            .ToArray();
+
+        return sorted;
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[][] orders = new int[n][];
+
+        for (int i = 0; i < n; i++)
+        {
+            orders[i] = Console.ReadLine()
+                        .Split(' ')
+                        .Select(int.Parse)
+                        .ToArray();
+        }
+
+        int[] result = jimOrders(orders);
+        Console.WriteLine(string.Join(" ", result));
+    }
+}
