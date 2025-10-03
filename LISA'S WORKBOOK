@@ -1,0 +1,37 @@
+using System;
+
+class Solution
+{
+    static int workbook(int n, int k, int[] arr)
+    {
+        int specialCount = 0;
+        int page = 1;
+
+        for (int chapter = 0; chapter < n; chapter++)
+        {
+            int problems = arr[chapter];
+            for (int problem = 1; problem <= problems; problem++)
+            {
+                if (problem == page) // check if special
+                    specialCount++;
+
+                if (problem % k == 0 || problem == problems)
+                    page++; // move to next page
+            }
+        }
+
+        return specialCount;
+    }
+
+    static void Main(string[] args)
+    {
+        string[] firstLine = Console.ReadLine().Split(' ');
+        int n = int.Parse(firstLine[0]);
+        int k = int.Parse(firstLine[1]);
+
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int result = workbook(n, k, arr);
+        Console.WriteLine(result);
+    }
+}
