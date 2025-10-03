@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Solution
+{
+    static int pairs(int k, int[] arr)
+    {
+        HashSet<int> set = new HashSet<int>(arr);
+        int count = 0;
+
+        foreach (int num in arr)
+        {
+            if (set.Contains(num + k))
+                count++;
+        }
+
+        return count;
+    }
+
+    static void Main(string[] args)
+    {
+        string[] firstLine = Console.ReadLine().Split(' ');
+        int n = int.Parse(firstLine[0]);
+        int k = int.Parse(firstLine[1]);
+
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int result = pairs(k, arr);
+        Console.WriteLine(result);
+    }
+}
