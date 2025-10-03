@@ -1,0 +1,51 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int[] largestPermutation(int k, int[] arr)
+    {
+        int n = arr.Length;
+
+        // Map to store the index of each value
+        int[] index = new int[n + 1];
+        for (int i = 0; i < n; i++)
+        {
+            index[arr[i]] = i;
+        }
+
+        for (int i = 0; i < n && k > 0; i++)
+        {
+            int expected = n - i; // the number we want at this position
+            if (arr[i] != expected)
+            {
+                int swapIndex = index[expected];
+
+                // swap arr[i] with arr[swapIndex]
+                index[arr[i]] = swapIndex;
+                index[expected] = i;
+
+                int temp = arr[i];
+                arr[i] = arr[swapIndex];
+                arr[swapIndex] = temp;
+
+                k--; // used one swap
+            }
+        }
+
+        return arr;
+    }
+
+    static void Main()
+    {
+        var firstLine = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        int n = firstLine[0];
+        int k = firstLine[1];
+
+        int[] arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+        int[] result = largestPermutation(k, arr);
+
+        Console.WriteLine(string.Join(" ", result));
+    }
+}
