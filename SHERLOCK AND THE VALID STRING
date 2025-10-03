@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Solution
+{
+    static string isValid(string s)
+    {
+        // Count character frequencies
+        Dictionary<char, int> freq = new Dictionary<char, int>();
+        foreach (char c in s)
+        {
+            if (!freq.ContainsKey(c))
+                freq[c] = 0;
+            freq[c]++;
+        }
+
+        // Get the frequency values
+        var values = freq.Values.ToList();
+        var groups = values.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+
+        // Case 1: All same frequency
+        if (groups.Count == 1) return "YES";
+
+        // Case 2: Two different frequencies
+        if (groups.Count == 2)
+        {
+            int f1 = groups.ElementAt(0).Key, count1 = groups.ElementAt(0).Value;
+            int f2 = groups.ElementAt(1).Key, count2 = groups.ElementAt(1).Value;
+
+            // One frequency is 1 and appears once → remove it
+            if ((f1 == 1 && count1 == 1) || (f2 == 1 && count2 == 1))
+                return "YES";
+
+            // Or difference between frequencies is 1, and higher one occurs only once
+            if ((Math.Abs(f1 - f2) == 1) && ((count1 == 1) || (count2 == 1)))
+                return "YES";
+        }
+
+        // Otherwise not valid
+        return "NO";
+    }
+
+    static void Main()
+    {
+        string s = Console.ReadLine();
+        Console.WriteLine(isValid(s));
+    }
+}
