@@ -1,0 +1,65 @@
+using System;
+using System.Linq;
+
+class Program
+{
+    static long CountShifts(int[] arr)
+    {
+        return MergeSortAndCount(arr, 0, arr.Length - 1);
+    }
+
+    static long MergeSortAndCount(int[] arr, int left, int right)
+    {
+        long count = 0;
+        if (left < right)
+        {
+            int mid = (left + right) / 2;
+
+            count += MergeSortAndCount(arr, left, mid);
+            count += MergeSortAndCount(arr, mid + 1, right);
+
+            count += MergeAndCount(arr, left, mid, right);
+        }
+        return count;
+    }
+
+    static long MergeAndCount(int[] arr, int left, int mid, int right)
+    {
+        int[] leftArr = arr.Skip(left).Take(mid - left + 1).ToArray();
+        int[] rightArr = arr.Skip(mid + 1).Take(right - mid).ToArray();
+
+        int i = 0, j = 0, k = left;
+        long shifts = 0;
+
+        while (i < leftArr.Length && j < rightArr.Length)
+        {
+            if (leftArr[i] <= rightArr[j])
+            {
+                arr[k++] = leftArr[i++];
+            }
+            else
+            {
+                arr[k++] = rightArr[j++];
+                shifts += (leftArr.Length - i); // Count inversions
+            }
+        }
+
+        while (i < leftArr.Length)
+            arr[k++] = leftArr[i++];
+        while (j < rightArr.Length)
+            arr[k++] = rightArr[j++];
+
+        return shifts;
+    }
+
+    static void Main()
+    {
+        int q = int.Parse(Console.ReadLine());
+        for (int t = 0; t < q; t++)
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] arr = Console.ReadLine().Split().Select(int.Parse).ToArray();
+            Console.WriteLine(CountShifts(arr));
+        }
+    }
+}
