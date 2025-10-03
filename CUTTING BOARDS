@@ -1,0 +1,67 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    const long MOD = 1000000007;
+
+    static long boardCutting(int[] cost_y, int[] cost_x)
+    {
+        Array.Sort(cost_y);
+        Array.Sort(cost_x);
+        Array.Reverse(cost_y);
+        Array.Reverse(cost_x);
+
+        int i = 0, j = 0;
+        long horizontalPieces = 1, verticalPieces = 1;
+        long totalCost = 0;
+
+        while (i < cost_y.Length && j < cost_x.Length)
+        {
+            if (cost_y[i] >= cost_x[j])
+            {
+                totalCost = (totalCost + (cost_y[i] * verticalPieces) % MOD) % MOD;
+                horizontalPieces++;
+                i++;
+            }
+            else
+            {
+                totalCost = (totalCost + (cost_x[j] * horizontalPieces) % MOD) % MOD;
+                verticalPieces++;
+                j++;
+            }
+        }
+
+        // Remaining horizontal cuts
+        while (i < cost_y.Length)
+        {
+            totalCost = (totalCost + (cost_y[i] * verticalPieces) % MOD) % MOD;
+            i++;
+        }
+
+        // Remaining vertical cuts
+        while (j < cost_x.Length)
+        {
+            totalCost = (totalCost + (cost_x[j] * horizontalPieces) % MOD) % MOD;
+            j++;
+        }
+
+        return totalCost % MOD;
+    }
+
+    static void Main()
+    {
+        int q = int.Parse(Console.ReadLine());
+        for (int t = 0; t < q; t++)
+        {
+            var nm = Console.ReadLine().Split().Select(int.Parse).ToArray();
+            int n = nm[0]; // rows
+            int m = nm[1]; // cols
+
+            int[] cost_y = Console.ReadLine().Split().Select(int.Parse).ToArray();
+            int[] cost_x = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+            Console.WriteLine(boardCutting(cost_y, cost_x));
+        }
+    }
+}
