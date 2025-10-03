@@ -1,0 +1,37 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static long candies(int n, int[] arr)
+    {
+        int[] candies = Enumerable.Repeat(1, n).ToArray();
+
+        // Pass 1: left to right
+        for (int i = 1; i < n; i++)
+        {
+            if (arr[i] > arr[i - 1])
+                candies[i] = candies[i - 1] + 1;
+        }
+
+        // Pass 2: right to left
+        for (int i = n - 2; i >= 0; i--)
+        {
+            if (arr[i] > arr[i + 1])
+                candies[i] = Math.Max(candies[i], candies[i + 1] + 1);
+        }
+
+        // Total candies
+        return candies.Sum(c => (long)c);
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++)
+            arr[i] = int.Parse(Console.ReadLine());
+
+        Console.WriteLine(candies(n, arr));
+    }
+}
