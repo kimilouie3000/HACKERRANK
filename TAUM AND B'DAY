@@ -1,0 +1,29 @@
+using System;
+
+class Solution {
+    static long taumBday(long b, long w, long bc, long wc, long z) {
+        // Calculate minimal cost of black gifts
+        long minBlackCost = Math.Min(bc, wc + z);
+        // Calculate minimal cost of white gifts
+        long minWhiteCost = Math.Min(wc, bc + z);
+
+        return b * minBlackCost + w * minWhiteCost;
+    }
+
+    static void Main(string[] args) {
+        int t = int.Parse(Console.ReadLine());
+
+        for (int i = 0; i < t; i++) {
+            string[] bw = Console.ReadLine().Split(' ');
+            long b = long.Parse(bw[0]);
+            long w = long.Parse(bw[1]);
+
+            string[] costs = Console.ReadLine().Split(' ');
+            long bc = long.Parse(costs[0]);
+            long wc = long.Parse(costs[1]);
+            long z = long.Parse(costs[2]);
+
+            Console.WriteLine(taumBday(b, w, bc, wc, z));
+        }
+    }
+}
