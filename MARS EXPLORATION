@@ -1,0 +1,24 @@
+using System;
+
+class Solution {
+
+    static int marsExploration(string s) {
+        int altered = 0;
+        for (int i = 0; i < s.Length; i++) {
+            // Determine the expected character based on the position in the SOS pattern
+            char expectedChar = (i % 3 == 0 || i % 3 == 2) ? 'S' : 'O';
+            
+            // Compare the received character with the expected character
+            if (s[i] != expectedChar) {
+                altered++;
+            }
+        }
+        return altered;
+    }
+
+    static void Main(string[] args) {
+        string s = Console.ReadLine();
+        int result = marsExploration(s);
+        Console.WriteLine(result);
+    }
+}
