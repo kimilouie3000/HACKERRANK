@@ -1,0 +1,82 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static int rows, cols;
+    static char[,] grid;
+    static bool[,] visited;
+    static (int, int) start, goal;
+
+    // Directions: UP, DOWN, LEFT, RIGHT
+    static readonly int[] dr = { -1, 1, 0, 0 };
+    static readonly int[] dc = { 0, 0, -1, 1 };
+
+    static void Main(string[] args)
+    {
+        int t = int.Parse(Console.ReadLine()); // number of test cases
+
+        for (int test = 0; test < t; test++)
+        {
+            string[] dims = Console.ReadLine().Split();
+            rows = int.Parse(dims[0]);
+            cols = int.Parse(dims[1]);
+
+            grid = new char[rows, cols];
+            visited = new bool[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                string line = Console.ReadLine();
+                for (int j = 0; j < cols; j++)
+                {
+                    grid[i, j] = line[j];
+                    if (grid[i, j] == 'M') start = (i, j);
+                    if (grid[i, j] == '*') goal = (i, j);
+                }
+            }
+
+            int k = int.Parse(Console.ReadLine()); // Ron’s guess
+
+            int actualWaves = DFS(start.Item1, start.Item2);
+            Console.WriteLine(actualWaves == k ? "Impressed" : "Oops!");
+        }
+    }
+
+    // Depth First Search to follow the unique path
+    static int DFS(int r, int c)
+    {
+        if (r == goal.Item1 && c == goal.Item2)
+            return 0; // reached portkey
+
+        visited[r, c] = true;
+
+        List<(int, int)> options = new List<(int, int)>();
+        for (int d = 0; d < 4; d++)
+        {
+            int nr = r + dr[d], nc = c + dc[d];
+            if (IsValid(nr, nc))
+                options.Add((nr, nc));
+        }
+
+        foreach (var (nr, nc) in options)
+        {
+            int result = DFS(nr, nc);
+            if (result != -1)
+            {
+                // Hermione waves wand if more than one option available
+                return result + (options.Count > 1 ? 1 : 0);
+            }
+        }
+
+        return -1; // dead end (won’t happen, since path is guaranteed)
+    }
+
+    static bool IsValid(int r, int c)
+    {
+        return r >= 0 && r < rows &&
+               c >= 0 && c < cols &&
+               !visited[r, c] &&
+               (grid[r, c] == '.' || grid[r, c] == '*' || grid[r, c] == 'M');
+    }
+}
