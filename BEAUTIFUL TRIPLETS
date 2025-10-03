@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+
+class Solution {
+    static int beautifulTriplets(int d, int[] arr) {
+        HashSet<int> values = new HashSet<int>(arr);
+        int count = 0;
+
+        foreach (int val in arr) {
+            if (values.Contains(val + d) && values.Contains(val + 2 * d)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    static void Main(string[] args) {
+        string[] firstLine = Console.ReadLine().Split(' ');
+        int n = int.Parse(firstLine[0]);
+        int d = int.Parse(firstLine[1]);
+
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        Console.WriteLine(beautifulTriplets(d, arr));
+    }
+}
