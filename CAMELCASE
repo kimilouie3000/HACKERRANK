@@ -1,0 +1,22 @@
+using System;
+
+class Solution
+{
+    static int camelcase(string s)
+    {
+        int count = 1; // At least one word
+        foreach (char c in s)
+        {
+            if (char.IsUpper(c))
+                count++;
+        }
+        return count;
+    }
+
+    static void Main()
+    {
+        string input = Console.ReadLine();
+        int result = camelcase(input);
+        Console.WriteLine(result);
+    }
+}
