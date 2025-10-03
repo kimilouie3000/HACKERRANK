@@ -1,0 +1,24 @@
+using System;
+
+class Solution {
+
+    static int alternatingCharacters(string s) {
+        int deletions = 0;
+        for (int i = 0; i < s.Length - 1; i++) {
+            if (s[i] == s[i + 1]) {
+                deletions++;
+            }
+        }
+        return deletions;
+    }
+
+    static void Main(string[] args) {
+        int q = Convert.ToInt32(Console.ReadLine().Trim());
+
+        for (int i = 0; i < q; i++) {
+            string s = Console.ReadLine();
+            int result = alternatingCharacters(s);
+            Console.WriteLine(result);
+        }
+    }
+}
