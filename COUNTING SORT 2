@@ -1,0 +1,39 @@
+using System;
+
+class Solution
+{
+    static void countingSort(int[] arr)
+    {
+        // Find max value in arr to size the count array
+        int max = 0;
+        foreach (int num in arr)
+            if (num > max) max = num;
+
+        int[] count = new int[max + 1];
+
+        // Count occurrences
+        foreach (int num in arr)
+            count[num]++;
+
+        // Print sorted output
+        for (int i = 0; i < count.Length; i++)
+        {
+            for (int j = 0; j < count[i]; j++)
+            {
+                Console.Write(i + " ");
+            }
+        }
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        string[] input = Console.ReadLine().Split(' ');
+        int[] arr = new int[n];
+
+        for (int i = 0; i < n; i++)
+            arr[i] = int.Parse(input[i]);
+
+        countingSort(arr);
+    }
+}
