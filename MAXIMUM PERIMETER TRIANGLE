@@ -1,0 +1,33 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int[] maximumPerimeterTriangle(int[] sticks)
+    {
+        // Sort ascending
+        Array.Sort(sticks);
+
+        // Traverse from largest to smallest triplet
+        for (int i = sticks.Length - 3; i >= 0; i--)
+        {
+            int a = sticks[i], b = sticks[i + 1], c = sticks[i + 2];
+
+            // Check triangle condition
+            if (a + b > c)
+                return new int[] { a, b, c };
+        }
+
+        // If no valid triangle found
+        return new int[] { -1 };
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] sticks = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+        var result = maximumPerimeterTriangle(sticks);
+        Console.WriteLine(string.Join(" ", result));
+    }
+}
