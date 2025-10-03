@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static string reverseShuffleMerge(string s)
+    {
+        int[] freq = new int[26], used = new int[26], remain = new int[26];
+        foreach (char c in s) { freq[c - 'a']++; remain[c - 'a']++; }
+        for (int i = 0; i < 26; i++) freq[i] /= 2;
+
+        Stack<char> st = new Stack<char>();
+        for (int i = s.Length - 1; i >= 0; i--)
+        {
+            char c = s[i]; int idx = c - 'a'; remain[idx]--;
+            if (used[idx] == freq[idx]) continue;
+
+            while (st.Count > 0)
+            {
+                char top = st.Peek(); int t = top - 'a';
+                if (top > c && used[t] + remain[t] > freq[t])
+                {
+                    st.Pop(); used[t]--;
+                }
+                else break;
+            }
+            st.Push(c); used[idx]++;
+        }
+
+        char[] arr = st.ToArray(); Array.Reverse(arr);
+        return new string(arr);
+    }
+
+    static void Main() => Console.WriteLine(reverseShuffleMerge(Console.ReadLine()));
+}
