@@ -1,0 +1,29 @@
+using System;
+
+class Solution {
+    static int chocolateFeast(int n, int c, int m) {
+        int chocolates = n / c; // buy initial chocolates
+        int wrappers = chocolates;
+
+        while (wrappers >= m) {
+            int freeChocs = wrappers / m;
+            chocolates += freeChocs;
+            wrappers = wrappers % m + freeChocs;
+        }
+
+        return chocolates;
+    }
+
+    static void Main(string[] args) {
+        int t = int.Parse(Console.ReadLine());
+
+        for (int i = 0; i < t; i++) {
+            string[] inputs = Console.ReadLine().Split(' ');
+            int n = int.Parse(inputs[0]); // money
+            int c = int.Parse(inputs[1]); // cost of chocolate
+            int m = int.Parse(inputs[2]); // wrappers required for free choc
+
+            Console.WriteLine(chocolateFeast(n, c, m));
+        }
+    }
+}
