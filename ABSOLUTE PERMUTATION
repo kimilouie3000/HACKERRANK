@@ -1,0 +1,43 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int[] absolutePermutation(int n, int k)
+    {
+        if (k == 0)
+            return Enumerable.Range(1, n).ToArray();
+
+        if (n % (2 * k) != 0)
+            return new int[] { -1 };
+
+        int[] result = new int[n];
+        bool add = true;
+
+        for (int i = 1; i <= n; i++)
+        {
+            if (add)
+                result[i - 1] = i + k;
+            else
+                result[i - 1] = i - k;
+
+            if (i % k == 0) add = !add; // flip direction every k elements
+        }
+
+        return result;
+    }
+
+    static void Main()
+    {
+        int t = int.Parse(Console.ReadLine());
+        for (int q = 0; q < t; q++)
+        {
+            string[] parts = Console.ReadLine().Split(' ');
+            int n = int.Parse(parts[0]);
+            int k = int.Parse(parts[1]);
+
+            int[] res = absolutePermutation(n, k);
+            Console.WriteLine(string.Join(" ", res));
+        }
+    }
+}
