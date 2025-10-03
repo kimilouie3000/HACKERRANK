@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static int[] quickSort(int[] arr)
+    {
+        int pivot = arr[0];
+        List<int> left = new List<int>();
+        List<int> equal = new List<int>();
+        List<int> right = new List<int>();
+
+        foreach (int num in arr)
+        {
+            if (num < pivot) left.Add(num);
+            else if (num == pivot) equal.Add(num);
+            else right.Add(num);
+        }
+
+        // Merge left + equal + right
+        List<int> result = new List<int>();
+        result.AddRange(left);
+        result.AddRange(equal);
+        result.AddRange(right);
+
+        return result.ToArray();
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int[] result = quickSort(arr);
+        Console.WriteLine(string.Join(" ", result));
+    }
+}
