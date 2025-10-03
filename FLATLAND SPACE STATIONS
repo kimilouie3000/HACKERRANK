@@ -1,0 +1,37 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int flatlandSpaceStations(int n, int[] c)
+    {
+        Array.Sort(c); // sort station positions
+        int maxDist = 0;
+
+        // distance from first city to first station
+        maxDist = Math.Max(maxDist, c[0] - 0);
+
+        // distance from last city to last station
+        maxDist = Math.Max(maxDist, (n - 1) - c[c.Length - 1]);
+
+        // max distance between consecutive stations
+        for (int i = 1; i < c.Length; i++)
+        {
+            int distBetween = (c[i] - c[i - 1]) / 2;
+            maxDist = Math.Max(maxDist, distBetween);
+        }
+
+        return maxDist;
+    }
+
+    static void Main(string[] args)
+    {
+        string[] firstLine = Console.ReadLine().Split(' ');
+        int n = int.Parse(firstLine[0]);
+        int m = int.Parse(firstLine[1]);
+
+        int[] c = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+        Console.WriteLine(flatlandSpaceStations(n, c));
+    }
+}
