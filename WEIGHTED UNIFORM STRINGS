@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+
+class Solution {
+
+    static string[] weightedUniformStrings(string s, int[] queries) {
+        HashSet<int> weights = new HashSet<int>();
+        int weight = 0;
+        char prevChar = ' ';
+
+        for (int i = 0; i < s.Length; i++) {
+            char currentChar = s[i];
+            int charWeight = currentChar - 'a' + 1;
+
+            if (currentChar == prevChar) {
+                weight += charWeight;
+            } else {
+                weight = charWeight;
+            }
+
+            weights.Add(weight);
+            prevChar = currentChar;
+        }
+
+        string[] result = new string[queries.Length];
+        for (int i = 0; i < queries.Length; i++) {
+            if (weights.Contains(queries[i])) {
+                result[i] = "Yes";
+            } else {
+                result[i] = "No";
+            }
+        }
+
+        return result;
+    }
+
+    static void Main(string[] args) {
+        string s = Console.ReadLine();
+        int queriesCount = Convert.ToInt32(Console.ReadLine().Trim());
+        int[] queries = new int[queriesCount];
+
+        for (int i = 0; i < queriesCount; i++) {
+            queries[i] = Convert.ToInt32(Console.ReadLine().Trim());
+        }
+
+        string[] result = weightedUniformStrings(s, queries);
+
+        foreach (string res in result) {
+            Console.WriteLine(res);
+        }
+    }
+}
