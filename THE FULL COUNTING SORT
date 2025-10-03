@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void countSort(List<string[]> arr)
+    {
+        int n = arr.Count;
+
+        // Find max key
+        int maxKey = 0;
+        foreach (var pair in arr)
+            maxKey = Math.Max(maxKey, int.Parse(pair[0]));
+
+        // Buckets
+        var buckets = new List<string>[maxKey + 1];
+        for (int i = 0; i <= maxKey; i++)
+            buckets[i] = new List<string>();
+
+        // Fill buckets (replace first half with "-")
+        for (int i = 0; i < n; i++)
+        {
+            int key = int.Parse(arr[i][0]);
+            string val = (i < n / 2) ? "-" : arr[i][1];
+            buckets[key].Add(val);
+        }
+
+        // Print result
+        foreach (var b in buckets)
+            foreach (var s in b)
+                Console.Write(s + " ");
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        var arr = new List<string[]>();
+        for (int i = 0; i < n; i++)
+            arr.Add(Console.ReadLine().Split());
+        countSort(arr);
+    }
+}
