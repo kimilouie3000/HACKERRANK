@@ -1,0 +1,91 @@
+using System;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        almostSorted(arr);
+    }
+
+    static void almostSorted(int[] arr)
+    {
+        int n = arr.Length;
+        int[] sorted = new int[n];
+        Array.Copy(arr, sorted, n);
+        Array.Sort(sorted);
+
+        // Check if already sorted
+        bool sortedAlready = true;
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i] != sorted[i])
+            {
+                sortedAlready = false;
+                break;
+            }
+        }
+
+        if (sortedAlready)
+        {
+            Console.WriteLine("yes");
+            return;
+        }
+
+        // Find first and last positions where arr differs from sorted
+        int left = 0;
+        while (left < n && arr[left] == sorted[left]) left++;
+        int right = n - 1;
+        while (right >= 0 && arr[right] == sorted[right]) right--;
+
+        // Try swap and check if sorted
+        Swap(arr, left, right);
+        if (IsSorted(arr))
+        {
+            Console.WriteLine("yes");
+            Console.WriteLine($"swap {left + 1} {right + 1}");
+            return;
+        }
+        Swap(arr, left, right); // Swap back
+
+        // Try reverse and check if sorted
+        Reverse(arr, left, right);
+        if (IsSorted(arr))
+        {
+            Console.WriteLine("yes");
+            Console.WriteLine($"reverse {left + 1} {right + 1}");
+            return;
+        }
+        Reverse(arr, left, right); // Reverse back (optional)
+
+        Console.WriteLine("no");
+    }
+
+    static void Swap(int[] arr, int i, int j)
+    {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    static void Reverse(int[] arr, int start, int end)
+    {
+        while (start < end)
+        {
+            Swap(arr, start, end);
+            start++;
+            end--;
+        }
+    }
+
+    static bool IsSorted(int[] arr)
+    {
+        for (int i = 1; i < arr.Length; i++)
+        {
+            if (arr[i] < arr[i - 1])
+                return false;
+        }
+        return true;
+    }
+}
