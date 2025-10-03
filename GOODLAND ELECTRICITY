@@ -1,0 +1,37 @@
+using System;
+
+class Solution
+{
+    static int pylons(int k, int[] arr)
+    {
+        int n = arr.Length;
+        int i = 0, plants = 0;
+
+        while (i < n)
+        {
+            int pos = Math.Min(i + k - 1, n - 1);
+
+            while (pos >= i - (k - 1) && pos >= 0 && arr[pos] == 0)
+                pos--;
+
+            if (pos < i - (k - 1) || pos < 0)
+                return -1;
+
+            plants++;
+            i = pos + k;
+        }
+
+        return plants;
+    }
+
+    static void Main()
+    {
+        var first = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int n = first[0], k = first[1];
+
+        var arr = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        Console.WriteLine(pylons(k, arr));
+    }
+}
+
