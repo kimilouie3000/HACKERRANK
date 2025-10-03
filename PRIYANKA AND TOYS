@@ -1,0 +1,37 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int toys(int[] w)
+    {
+        Array.Sort(w); // sort weights
+        int containers = 0;
+        int i = 0;
+        int n = w.Length;
+
+        while (i < n)
+        {
+            containers++;
+            int minWeight = w[i];
+            // keep adding toys until exceeding minWeight + 4
+            while (i < n && w[i] <= minWeight + 4)
+            {
+                i++;
+            }
+        }
+
+        return containers;
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] w = Console.ReadLine()
+                         .Split(' ')
+                         .Select(int.Parse)
+                         .ToArray();
+
+        Console.WriteLine(toys(w));
+    }
+}
