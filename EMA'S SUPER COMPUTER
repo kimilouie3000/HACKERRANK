@@ -1,0 +1,142 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        var inputs = Console.ReadLine().Split();
+        int n = int.Parse(inputs[0]);
+        int m = int.Parse(inputs[1]);
+        string[] grid = new string[n];
+        for (int i = 0; i < n; i++)
+            grid[i] = Console.ReadLine();
+
+        Console.WriteLine(twoPluses(grid));
+    }
+
+    // Returns maximum product of areas of two largest non-overlapping pluses
+    public static int twoPluses(string[] grid)
+    {
+        int n = grid.Length;
+        int m = grid[0].Length;
+
+        // Precompute max arm length for each cell (how far plus arms can extend)
+        int[,] up = new int[n, m];
+        int[,] down = new int[n, m];
+        int[,] left = new int[n, m];
+        int[,] right = new int[n, m];
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+            {
+                if (grid[i][j] == 'G')
+                {
+                    up[i, j] = (i == 0) ? 1 : up[i - 1, j] + 1;
+                    left[i, j] = (j == 0) ? 1 : left[i, j - 1] + 1;
+                }
+                else
+                {
+                    up[i, j] = 0;
+                    left[i, j] = 0;
+                }
+            }
+
+        for (int i = n - 1; i >= 0; i--)
+            for (int j = m - 1; j >= 0; j--)
+            {
+                if (grid[i][j] == 'G')
+                {
+                    down[i, j] = (i == n - 1) ? 1 : down[i + 1, j] + 1;
+                    right[i, j] = (j == m - 1) ? 1 : right[i, j + 1] + 1;
+                }
+                else
+                {
+                    down[i, j] = 0;
+                    right[i, j] = 0;
+                }
+            }
+
+        // Store all pluses: center and size (arm length)
+        List<Plus> pluses = new List<Plus>();
+
+        // Calculate max arm length for each G cell
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                if (grid[i][j] == 'G')
+                {
+                    // Max arm length is min of arms in four directions
+                    int armLength = Math.Min(Math.Min(up[i, j], down[i, j]), Math.Min(left[i, j], right[i, j])) - 1;
+                    for (int size = 0; size <= armLength; size++)
+                    {
+                        pluses.Add(new Plus(i, j, size));
+                    }
+                }
+
+        int maxProduct = 0;
+
+        // Check pairs of pluses to find max product of area without overlap
+        for (int i = 0; i < pluses.Count; i++)
+        {
+            for (int j = i + 1; j < pluses.Count; j++)
+            {
+                if (!Overlap(pluses[i], pluses[j]))
+                {
+                    int product = pluses[i].Area() * pluses[j].Area();
+                    if (product > maxProduct) maxProduct = product;
+                }
+            }
+        }
+
+        return maxProduct;
+    }
+
+    // Check if two pluses overlap
+    private static bool Overlap(Plus p1, Plus p2)
+    {
+        var cells1 = p1.Cells();
+        var cells2 = p2.Cells();
+
+        HashSet<(int, int)> set = new HashSet<(int, int)>(cells1);
+        foreach (var cell in cells2)
+            if (set.Contains(cell))
+                return true;
+        return false;
+    }
+
+    class Plus
+    {
+        public int Row;
+        public int Col;
+        public int Size; // arm length
+
+        public Plus(int row, int col, int size)
+        {
+            Row = row;
+            Col = col;
+            Size = size;
+        }
+
+        public int Area()
+        {
+            // Area = 1 (center) + 4 * size (arms)
+            return 1 + 4 * Size;
+        }
+
+        public List<(int, int)> Cells()
+        {
+            var cells = new List<(int, int)>
+            {
+                (Row, Col)
+            };
+            for (int s = 1; s <= Size; s++)
+            {
+                cells.Add((Row - s, Col));
+                cells.Add((Row + s, Col));
+                cells.Add((Row, Col - s));
+                cells.Add((Row, Col + s));
+            }
+            return cells;
+        }
+    }
+}
