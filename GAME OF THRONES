@@ -1,0 +1,31 @@
+using System;
+
+class Solution
+{
+    static string gameOfThrones(string s)
+    {
+        int[] freq = new int[26];
+
+        // Count frequency of each character
+        foreach (char c in s)
+            freq[c - 'a']++;
+
+        int oddCount = 0;
+
+        // Count characters with odd frequency
+        foreach (int count in freq)
+        {
+            if (count % 2 != 0)
+                oddCount++;
+        }
+
+        // For palindrome: at most 1 odd frequency allowed
+        return oddCount > 1 ? "NO" : "YES";
+    }
+
+    static void Main()
+    {
+        string s = Console.ReadLine();
+        Console.WriteLine(gameOfThrones(s));
+    }
+}
