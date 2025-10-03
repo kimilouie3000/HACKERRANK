@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Solution
+{
+    static List<int> missingNumbers(int[] arr, int[] brr)
+    {
+        // Dictionary to count frequencies in brr (the original)
+        Dictionary<int, int> freqBrr = new Dictionary<int, int>();
+        foreach (int num in brr)
+        {
+            if (!freqBrr.ContainsKey(num))
+                freqBrr[num] = 0;
+            freqBrr[num]++;
+        }
+
+        // Dictionary to count frequencies in arr
+        Dictionary<int, int> freqArr = new Dictionary<int, int>();
+        foreach (int num in arr)
+        {
+            if (!freqArr.ContainsKey(num))
+                freqArr[num] = 0;
+            freqArr[num]++;
+        }
+
+        // Find numbers where frequency is less in arr
+        List<int> missing = new List<int>();
+        foreach (var kvp in freqBrr)
+        {
+            int num = kvp.Key;
+            int freqInBrr = kvp.Value;
+            int freqInArr = freqArr.ContainsKey(num) ? freqArr[num] : 0;
+
+            if (freqInArr < freqInBrr)
+                missing.Add(num);
+        }
+
+        missing.Sort();
+        return missing;
+    }
+
+    static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int m = int.Parse(Console.ReadLine());
+        int[] brr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        List<int> result = missingNumbers(arr, brr);
+        Console.WriteLine(string.Join(" ", result));
+    }
+}
