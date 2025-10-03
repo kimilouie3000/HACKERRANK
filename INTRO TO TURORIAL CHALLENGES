@@ -1,0 +1,19 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static void Main()
+    {
+        // Read input
+        int V = int.Parse(Console.ReadLine()); // Value to find
+        int n = int.Parse(Console.ReadLine()); // Size of array
+        int[] arr = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+        // Find index of V
+        int index = Array.IndexOf(arr, V);
+
+        // Print result
+        Console.WriteLine(index);
+    }
+}
