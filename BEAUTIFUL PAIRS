@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static int beautifulPairs(int[] A, int[] B)
+    {
+        Dictionary<int, int> freq = new Dictionary<int, int>();
+
+        // Count frequencies of elements in A
+        foreach (var x in A)
+        {
+            if (!freq.ContainsKey(x)) freq[x] = 0;
+            freq[x]++;
+        }
+
+        int matches = 0;
+
+        // Match elements from B with A
+        foreach (var x in B)
+        {
+            if (freq.ContainsKey(x) && freq[x] > 0)
+            {
+                matches++;
+                freq[x]--;
+            }
+        }
+
+        // If all matched, forced to change one element → lose one
+        if (matches == A.Length)
+            return matches - 1;
+
+        // Otherwise, we can always add one more match
+        return matches + 1;
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] B = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        Console.WriteLine(beautifulPairs(A, B));
+    }
+}
