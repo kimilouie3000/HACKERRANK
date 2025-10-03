@@ -1,0 +1,28 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static string twoStrings(string s1, string s2)
+    {
+        HashSet<char> set = new HashSet<char>(s1);
+        
+        foreach (char c in s2)
+        {
+            if (set.Contains(c))
+                return "YES";
+        }
+        return "NO";
+    }
+
+    static void Main()
+    {
+        int t = int.Parse(Console.ReadLine());
+        for (int i = 0; i < t; i++)
+        {
+            string s1 = Console.ReadLine();
+            string s2 = Console.ReadLine();
+            Console.WriteLine(twoStrings(s1, s2));
+        }
+    }
+}
