@@ -1,0 +1,19 @@
+using System;
+
+class Solution
+{
+    static long flippingBits(long n)
+    {
+        return (uint.MaxValue - n); // 2^32 - 1 - n
+    }
+
+    static void Main()
+    {
+        int q = int.Parse(Console.ReadLine());
+        for (int i = 0; i < q; i++)
+        {
+            long n = long.Parse(Console.ReadLine());
+            Console.WriteLine(flippingBits(n));
+        }
+    }
+}
