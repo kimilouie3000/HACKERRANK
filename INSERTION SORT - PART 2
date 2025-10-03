@@ -1,0 +1,35 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static void insertionSort2(int n, int[] arr)
+    {
+        for (int i = 1; i < n; i++)  // start from 2nd element
+        {
+            int value = arr[i];
+            int j = i - 1;
+
+            // Shift elements greater than value to the right
+            while (j >= 0 && arr[j] > value)
+            {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+
+            // Insert value at the right position
+            arr[j + 1] = value;
+
+            // Print array after each iteration
+            Console.WriteLine(string.Join(" ", arr));
+        }
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+        insertionSort2(n, arr);
+    }
+}
