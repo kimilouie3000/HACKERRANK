@@ -1,0 +1,27 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static long marcsCakewalk(int[] calorie)
+    {
+        // Sort descending
+        Array.Sort(calorie);
+        Array.Reverse(calorie);
+
+        long miles = 0;
+        for (int i = 0; i < calorie.Length; i++)
+        {
+            miles += (long)calorie[i] * (1L << i); // calorie[i] * 2^i
+        }
+        return miles;
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] calorie = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+        Console.WriteLine(marcsCakewalk(calorie));
+    }
+}
