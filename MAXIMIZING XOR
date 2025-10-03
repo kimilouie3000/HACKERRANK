@@ -1,0 +1,23 @@
+using System;
+
+class Solution
+{
+    static int maximizingXor(int l, int r)
+    {
+        int xor = l ^ r;
+        int res = 1;
+        while (xor > 0)
+        {
+            res <<= 1;
+            xor >>= 1;
+        }
+        return res - 1;
+    }
+
+    static void Main()
+    {
+        int l = int.Parse(Console.ReadLine());
+        int r = int.Parse(Console.ReadLine());
+        Console.WriteLine(maximizingXor(l, r));
+    }
+}
