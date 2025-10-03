@@ -1,0 +1,19 @@
+using System;
+using System.Linq;
+
+class Program
+{
+    static int findMedian(int[] arr)
+    {
+        Array.Sort(arr);               // Sort the array
+        int mid = arr.Length / 2;      // Middle index (works since n is odd)
+        return arr[mid];               // Return median
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Console.ReadLine().Split().Select(int.Parse).ToArray();
+        Console.WriteLine(findMedian(arr));
+    }
+}
