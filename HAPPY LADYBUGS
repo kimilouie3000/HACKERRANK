@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Solution
+{
+    static string happyLadybugs(string b)
+    {
+        // If there is only one cell
+        if (b.Length == 1)
+        {
+            return b[0] == '_' ? "YES" : "NO";
+        }
+
+        bool hasEmpty = b.Contains('_');
+
+        // Count frequency of each ladybug
+        Dictionary<char, int> freq = new Dictionary<char, int>();
+        foreach (char ch in b)
+        {
+            if (ch != '_')
+            {
+                if (!freq.ContainsKey(ch)) freq[ch] = 0;
+                freq[ch]++;
+            }
+        }
+
+        // If there are no empty cells, check if already happy
+        if (!hasEmpty)
+        {
+            for (int i = 0; i < b.Length; i++)
+            {
+                bool left = (i > 0 && b[i] == b[i - 1]);
+                bool right = (i < b.Length - 1 && b[i] == b[i + 1]);
+                if (!(left || right))
+                    return "NO";
+            }
+            return "YES";
+        }
+
+        // If there are empty cells, check if all ladybugs occur at least twice
+        foreach (var kv in freq)
+        {
+            if (kv.Value == 1) return "NO";
+        }
+
+        return "YES";
+    }
+
+    static void Main(string[] args)
+    {
+        int g = int.Parse(Console.ReadLine());
+        for (int t = 0; t < g; t++)
+        {
+            int n = int.Parse(Console.ReadLine());
+            string b = Console.ReadLine();
+            Console.WriteLine(happyLadybugs(b));
+        }
+    }
+}
