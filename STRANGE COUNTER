@@ -1,0 +1,26 @@
+using System;
+
+class Solution
+{
+    static long strangeCounter(long t)
+    {
+        long cycleStart = 1;
+        long cycleValue = 3;
+
+        // Find the cycle where t belongs
+        while (t > cycleStart + cycleValue - 1)
+        {
+            cycleStart += cycleValue;
+            cycleValue *= 2;
+        }
+
+        // Value at time t
+        return cycleValue - (t - cycleStart);
+    }
+
+    static void Main(string[] args)
+    {
+        long t = long.Parse(Console.ReadLine());
+        Console.WriteLine(strangeCounter(t));
+    }
+}
