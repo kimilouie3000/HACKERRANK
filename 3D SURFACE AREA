@@ -1,0 +1,56 @@
+using System;
+
+class Solution
+{
+    static int surfaceArea(int[][] A, int H, int W)
+    {
+        int area = 0;
+
+        for (int i = 0; i < H; i++)
+        {
+            for (int j = 0; j < W; j++)
+            {
+                int h = A[i][j];
+                if (h > 0)
+                {
+                    // Top and bottom
+                    area += 2;
+
+                    // Check all 4 sides
+                    // Up
+                    int up = (i > 0) ? A[i - 1][j] : 0;
+                    area += Math.Max(0, h - up);
+
+                    // Down
+                    int down = (i < H - 1) ? A[i + 1][j] : 0;
+                    area += Math.Max(0, h - down);
+
+                    // Left
+                    int left = (j > 0) ? A[i][j - 1] : 0;
+                    area += Math.Max(0, h - left);
+
+                    // Right
+                    int right = (j < W - 1) ? A[i][j + 1] : 0;
+                    area += Math.Max(0, h - right);
+                }
+            }
+        }
+        return area;
+    }
+
+    static void Main(string[] args)
+    {
+        string[] dims = Console.ReadLine().Split(' ');
+        int H = int.Parse(dims[0]);
+        int W = int.Parse(dims[1]);
+
+        int[][] A = new int[H][];
+        for (int i = 0; i < H; i++)
+        {
+            string[] row = Console.ReadLine().Split(' ');
+            A[i] = Array.ConvertAll(row, int.Parse);
+        }
+
+        Console.WriteLine(surfaceArea(A, H, W));
+    }
+}
