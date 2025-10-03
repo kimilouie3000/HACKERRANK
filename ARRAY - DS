@@ -1,0 +1,19 @@
+using System;
+
+class Solution
+{
+    static void Main(string[] args)
+    {
+        // Read size of array
+        int n = int.Parse(Console.ReadLine());
+
+        // Read array elements
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        // Reverse the array
+        Array.Reverse(arr);
+
+        // Print reversed array
+        Console.WriteLine(string.Join(" ", arr));
+    }
+}
