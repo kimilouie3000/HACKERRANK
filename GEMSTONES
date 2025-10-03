@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Solution {
+
+    static int gemstones(string[] arr) {
+        if (arr == null || arr.Length == 0) {
+            return 0;
+        }
+
+        HashSet<char> commonMinerals = new HashSet<char>(arr[0].ToCharArray());
+
+        for (int i = 1; i < arr.Length; i++) {
+            HashSet<char> currentMinerals = new HashSet<char>(arr[i].ToCharArray());
+            commonMinerals.IntersectWith(currentMinerals);
+        }
+
+        return commonMinerals.Count;
+    }
+
+    static void Main(string[] args) {
+        int n = Convert.ToInt32(Console.ReadLine().Trim());
+
+        string[] arr = new string[n];
+
+        for (int i = 0; i < n; i++) {
+            string arrItem = Console.ReadLine();
+            arr[i] = arrItem;
+        }
+
+        int result = gemstones(arr);
+
+        Console.WriteLine(result);
+    }
+}
