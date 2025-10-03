@@ -1,0 +1,39 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int getMinimumCost(int k, int[] c)
+    {
+        // Sort prices in descending order (buy expensive flowers first)
+        Array.Sort(c);
+        Array.Reverse(c);
+
+        int totalCost = 0;
+
+        for (int i = 0; i < c.Length; i++)
+        {
+            // Determine how many flowers this buyer has already bought
+            int multiplier = (i / k) + 1; 
+            totalCost += multiplier * c[i];
+        }
+
+        return totalCost;
+    }
+
+    static void Main()
+    {
+        // Read input
+        var firstLine = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        int n = firstLine[0]; // number of flowers
+        int k = firstLine[1]; // number of friends
+
+        int[] c = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+        // Compute result
+        int result = getMinimumCost(k, c);
+
+        // Output
+        Console.WriteLine(result);
+    }
+}
