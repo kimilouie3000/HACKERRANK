@@ -1,0 +1,26 @@
+using System;
+
+class Solution
+{
+    static int[] countingSort(int[] arr)
+    {
+        int[] freq = new int[100]; // fixed size frequency array
+
+        foreach (int num in arr)
+        {
+            freq[num]++; // increment count for each number
+        }
+
+        return freq;
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+        int[] result = countingSort(arr);
+        Console.WriteLine(string.Join(" ", result));
+    }
+}
+
