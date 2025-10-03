@@ -1,0 +1,39 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static int maxMin(int k, int[] arr)
+    {
+        // Sort the array
+        Array.Sort(arr);
+
+        int minUnfairness = int.MaxValue;
+
+        // Sliding window of size k
+        for (int i = 0; i <= arr.Length - k; i++)
+        {
+            int unfairness = arr[i + k - 1] - arr[i];
+            if (unfairness < minUnfairness)
+                minUnfairness = unfairness;
+        }
+
+        return minUnfairness;
+    }
+
+    static void Main()
+    {
+        // Read inputs
+        int n = int.Parse(Console.ReadLine()); // number of elements
+        int k = int.Parse(Console.ReadLine()); // size of subset
+
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            arr[i] = int.Parse(Console.ReadLine());
+        }
+
+        // Compute and print result
+        Console.WriteLine(maxMin(k, arr));
+    }
+}
