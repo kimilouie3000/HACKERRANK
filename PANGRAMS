@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+
+class Solution {
+
+    static string pangrams(string s) {
+        // Convert the string to lowercase to ignore case
+        s = s.ToLower();
+        
+        // Use a HashSet to store unique characters
+        HashSet<char> alphabet = new HashSet<char>();
+        
+        // Iterate through the string and add each letter to the HashSet
+        foreach (char c in s) {
+            if (char.IsLetter(c)) {
+                alphabet.Add(c);
+            }
+        }
+        
+        // Check if the HashSet contains all 26 letters of the alphabet
+        if (alphabet.Count == 26) {
+            return "pangram";
+        } else {
+            return "not pangram";
+        }
+    }
+
+    static void Main(string[] args) {
+        string s = Console.ReadLine();
+        string result = pangrams(s);
+        Console.WriteLine(result);
+    }
+}
