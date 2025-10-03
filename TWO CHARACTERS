@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+
+class Solution
+{
+    static int alternate(string s)
+    {
+        HashSet<char> uniqueChars = new HashSet<char>(s);
+        int maxLength = 0;
+
+        // Try all pairs of characters
+        foreach (char c1 in uniqueChars)
+        {
+            foreach (char c2 in uniqueChars)
+            {
+                if (c1 >= c2) continue; // avoid duplicate pairs
+
+                string filtered = FilterString(s, c1, c2);
+
+                if (IsAlternating(filtered))
+                {
+                    maxLength = Math.Max(maxLength, filtered.Length);
+                }
+            }
+        }
+
+        return maxLength;
+    }
+
+    static string FilterString(string s, char c1, char c2)
+    {
+        var result = new System.Text.StringBuilder();
+        foreach (char c in s)
+        {
+            if (c == c1 || c == c2)
+                result.Append(c);
+        }
+        return result.ToString();
+    }
+
+    static bool IsAlternating(string s)
+    {
+        for (int i = 1; i < s.Length; i++)
+        {
+            if (s[i] == s[i - 1])
+                return false;
+        }
+        return s.Length >= 2; // must be at least 2 chars
+    }
+
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine()); // not used directly
+        string s = Console.ReadLine();
+
+        Console.WriteLine(alternate(s));
+    }
+}
