@@ -1,0 +1,42 @@
+using System;
+
+class Solution
+{
+    static string encryption(string s)
+    {
+        // Remove spaces
+        s = s.Replace(" ", "");
+        int L = s.Length;
+
+        // Calculate rows and columns
+        double root = Math.Sqrt(L);
+        int rows = (int)Math.Floor(root);
+        int cols = (int)Math.Ceiling(root);
+
+        // Ensure grid fits all characters
+        if (rows * cols < L)
+            rows++;
+
+        // Build encoded message
+        string result = "";
+        for (int c = 0; c < cols; c++)
+        {
+            for (int r = 0; r < rows; r++)
+            {
+                int index = r * cols + c;
+                if (index < L)
+                    result += s[index];
+            }
+            if (c < cols - 1)
+                result += " ";
+        }
+
+        return result;
+    }
+
+    static void Main(string[] args)
+    {
+        string input = Console.ReadLine();
+        Console.WriteLine(encryption(input));
+    }
+}
