@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static List<int> DynamicArray(int n, List<List<int>> queries)
+    {
+        List<List<int>> seqList = new List<List<int>>();
+        for (int i = 0; i < n; i++)
+            seqList.Add(new List<int>());
+
+        int lastAnswer = 0;
+        List<int> results = new List<int>();
+
+        foreach (var query in queries)
+        {
+            int type = query[0];
+            int x = query[1];
+            int y = query[2];
+
+            int idx = (x ^ lastAnswer) % n;
+
+            if (type == 1)
+            {
+                seqList[idx].Add(y);
+            }
+            else if (type == 2)
+            {
+                int value = seqList[idx][y % seqList[idx].Count];
+                lastAnswer = value;
+                results.Add(lastAnswer);
+            }
+        }
+        return results;
+    }
+
+    static void Main()
+    {
+        // Read n and q
+        var firstLine = Console.ReadLine().Split().Select(int.Parse).ToArray();
+        int n = firstLine[0];
+        int q = firstLine[1];
+
+        // Read queries
+        List<List<int>> queries = new List<List<int>>();
+        for (int i = 0; i < q; i++)
+        {
+            var parts = Console.ReadLine().Split().Select(int.Parse).ToList();
+            queries.Add(parts);
+        }
+
+        // Process and print results
+        var answers = DynamicArray(n, queries);
+        foreach (int ans in answers)
+            Console.WriteLine(ans);
+    }
+}
