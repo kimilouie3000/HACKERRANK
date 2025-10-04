@@ -1,0 +1,28 @@
+using System;
+
+class Solution
+{
+    static long SumXor(long n)
+    {
+        if (n == 0)
+            return 1;
+
+        int zeroBits = 0;
+
+        while (n > 0)
+        {
+            if ((n & 1) == 0)
+                zeroBits++;
+
+            n >>= 1;
+        }
+
+        return 1L << zeroBits;
+    }
+
+    static void Main(string[] args)
+    {
+        long n = long.Parse(Console.ReadLine());
+        Console.WriteLine(SumXor(n));
+    }
+}
