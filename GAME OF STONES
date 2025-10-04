@@ -1,0 +1,23 @@
+using System;
+
+class Solution
+{
+    static string gameOfStones(int n)
+    {
+        // Losing positions for First: n % 7 == 0 or 1
+        if (n % 7 == 0 || n % 7 == 1)
+            return "Second";
+        else
+            return "First";
+    }
+
+    static void Main(string[] args)
+    {
+        int t = int.Parse(Console.ReadLine());
+        for (int i = 0; i < t; i++)
+        {
+            int n = int.Parse(Console.ReadLine());
+            Console.WriteLine(gameOfStones(n));
+        }
+    }
+}
