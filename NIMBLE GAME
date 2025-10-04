@@ -1,0 +1,31 @@
+using System;
+using System.Linq;
+
+class Solution
+{
+    static string nimbleGame(int[] coins)
+    {
+        int xor = 0;
+
+        for (int i = 0; i < coins.Length; i++)
+        {
+            if (coins[i] % 2 != 0) // only if odd number of coins
+                xor ^= i;
+        }
+
+        return (xor == 0) ? "Second" : "First";
+    }
+
+    static void Main(string[] args)
+    {
+        int t = int.Parse(Console.ReadLine()); // number of test cases
+
+        for (int test = 0; test < t; test++)
+        {
+            int n = int.Parse(Console.ReadLine()); // number of squares
+            int[] coins = Array.ConvertAll(Console.ReadLine().Split(' '), int.Parse);
+
+            Console.WriteLine(nimbleGame(coins));
+        }
+    }
+}
